@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>รายละเอียดสินค้า: Loulou Love Bug</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Global Styles & Body Background --- */
+        body {
+            font-family: "Kanit", sans-serif, Tahoma;
+            color: #333;
+            line-height: 1.5;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden; /* ป้องกัน scrollbar แนวนอน */
+            background-color: #fdf2f4; /* สีพื้นหลังสำรอง */
+            
+            /* Parallax Background Effect */
+            background-image: url('d.jpg'); /* ตรวจสอบให้แน่ใจว่ามีไฟล์ d.jpg */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* ทำให้ภาพพื้นหลังอยู่กับที่ */
+            background-repeat: no-repeat;
+            background-blend-mode: multiply; /* ผสมผสานพื้นหลังกับโอเวอร์เลย์ */
+        }
+
+        /* Overlay สำหรับพื้นหลัง body */
+        body::before {
+            content: "";
+            position: fixed; /* ใช้ fixed สำหรับ parallax effect */
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4); /* โอเวอร์เลย์สีดำโปร่งแสง */
+            z-index: -1;
+        }
+
+        /* --- Main Container --- */
+        .container {
+            max-width: 800px;
+            margin: 50px auto; /* เพิ่มระยะห่างด้านบน */
+            background: rgba(255, 255, 255, 0.95); /* พื้นหลังสีขาวโปร่งแสงเล็กน้อย */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(255, 45, 78, 0.2); /* เงาที่เพิ่มขึ้น */
+            text-align: center;
+            position: relative;
+            z-index: 1; /* ทำให้ container อยู่เหนือพื้นหลัง */
+            opacity: 0; /* สถานะเริ่มต้นสำหรับเอฟเฟกต์ fade-in */
+            transform: translateY(20px); /* สถานะเริ่มต้นสำหรับเอฟเฟกต์ fade-in */
+            animation: fadeIn 1s ease-out forwards; /* เอฟเฟกต์ Fade-in */
+            animation-delay: 0.3s; /* หน่วงเวลาเริ่มต้นอนิเมชัน */
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Image Slider --- */
+        .image-slider {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto 20px auto;
+            user-select: none;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .product-detail-img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0 auto;
+            cursor: zoom-in; /* ระบุว่าสามารถซูมได้ */
+            transition: transform 0.3s ease;
+        }
+        .product-detail-img:hover {
+            transform: scale(1.02); /* ซูมเล็กน้อยเมื่อ hover */
+        }
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 143, 163, 0.8);
+            border: none;
+            color: white;
+            font-size: 24px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s, transform 0.3s;
+            user-select: none;
+            z-index: 10;
+        }
+        .slider-button:hover {
+            background-color: rgba(255, 110, 135, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+        .prev-btn {
+            left: 10px; /* ปรับตำแหน่ง */
+        }
+        .next-btn {
+            right: 10px; /* ปรับตำแหน่ง */
+        }
+
+        /* --- Product Details Text --- */
+        h1 {
+            color: #ff2e54;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "Pacifico", cursive; /* ฟอนต์ตกแต่งสำหรับ H1 */
+            font-size: 3rem; /* ขนาดฟอนต์ใหญ่ขึ้น */
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+        }
+        p {
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        p strong {
+            color: #ff2e54;
+        }
+        #productPrice {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff2e54;
+        }
+
+        /* --- Quantity Control (ใหม่) --- */
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 25px 0 20px; /* ปรับระยะห่าง */
+            gap: 10px;
+        }
+        .quantity-control button {
+            background-color: #ff8fa3;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        .quantity-control button:hover {
+            background-color: #ff6e87;
+            transform: translateY(-2px);
+        }
+        .quantity-control button:active {
+            transform: translateY(0);
+        }
+        .quantity-control input {
+            width: 60px;
+            text-align: center;
+            font-size: 1.1rem;
+            padding: 8px;
+            border: 1px solid #ff8fa3;
+            border-radius: 5px;
+            -moz-appearance: textfield; /* ซ่อนลูกศรสำหรับ Firefox */
+        }
+        .quantity-control input::-webkit-outer-spin-button,
+        .quantity-control input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* --- Add to Cart Button (ใหม่) --- */
+        .add-to-cart-btn {
+            display: inline-block;
+            background-color: #4CAF50; /* สีเขียวสำหรับปุ่มซื้อ */
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease, transform 0.1s ease;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 128, 0, 0.2);
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden; /* สำหรับ Ripple Effect */
+        }
+        .add-to-cart-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 128, 0, 0.3);
+        }
+        .add-to-cart-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 128, 0, 0.2);
+        }
+        /* Ripple effect */
+        .add-to-cart-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0;
+            transform: scale(0) translate(-50%, -50%);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+        }
+        .add-to-cart-btn:active::after {
+            transform: scale(30) translate(-50%, -50%);
+            opacity: 1;
+        }
+
+        /* --- Back Button (ปรับปรุง) --- */
+        .back-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0 auto;
+            padding: 12px 25px; /* เพิ่ม padding */
+            background-color: #88a6ff; /* สีฟ้าอมม่วงที่สวยงาม */
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease; /* เปลี่ยนแปลงอย่างราบรื่นสำหรับทุกคุณสมบัติ */
+            box-shadow: 0 3px 10px rgba(0, 0, 255, 0.1); /* เงาอ่อนๆ */
+        }
+        .back-button:hover {
+            background-color: #6a8bfb; /* สีฟ้าอมม่วงเข้มขึ้นเมื่อ hover */
+            transform: translateY(-2px); /* เลื่อนขึ้นเล็กน้อย */
+            box-shadow: 0 6px 15px rgba(0, 0, 255, 0.2); /* เงาที่เพิ่มขึ้นเมื่อ hover */
+        }
+        .back-button:active {
+            transform: translateY(0); /* เอฟเฟกต์กดลง */
+            box-shadow: 0 2px 5px rgba(0, 0, 255, 0.1);
+        }
+
+        /* --- Image Zoom Overlay (เสริม) --- */
+        .zoom-overlay {
+            display: none; /* ซ่อนไว้เป็นค่าเริ่มต้น */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8); /* พื้นหลังสีดำโปร่งแสง */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* อยู่ด้านบนสุด */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .zoom-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .zoom-overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .zoom-overlay.active img {
+            transform: scale(1);
+        }
+        .close-zoom {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: color 0.3s;
+        }
+        .close-zoom:hover {
+            color: #ff2e54;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px auto; 
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+            p {
+                font-size: 1rem;
+            }
+            .product-detail-img {
+                height: auto;
+            }
+            .slider-button {
+                font-size: 20px;
+                padding: 6px 10px;
+            }
+            .prev-btn {
+                left: 5px;
+            }
+            .next-btn {
+                right: 5px;
+            }
+            .add-to-cart-btn {
+                padding: 12px 25px;
+                font-size: 1.1rem;
+            }
+            .quantity-control input {
+                width: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Fuwasha Kids Pom Pom Purin
+
+</h1>
+
+        <div class="image-slider">
+            <button class="slider-button prev-btn" onclick="changeImage(-1)">&#10094;</button>
+            <img
+                src="PomPurin.png" alt="Loulou Love Bug"
+                id="productImage"
+                class="product-detail-img"
+                onclick="openZoom()"
+            />
+            <button class="slider-button next-btn" onclick="changeImage(1)">&#10095;</button>
+        </div>
+
+        <p>
+            <strong>รายละเอียดสินค้า:</strong> Fuwasha Kids Pom Pom Purin! ตุ๊กตาปอมปอมปูรินเวอร์ชัน Fuwasha Kids นี้พร้อมที่จะมาละลายใจคุณ ด้วยดีไซน์ที่แสนอบอุ่นและน่ากอด เหมาะสำหรับเป็นเพื่อนเล่นชิ้นโปรดของเด็กๆ หรือเป็นของสะสมแสนน่ารักสำหรับแฟนปอมปอมปูรินทุกวัย
+        </p>
+        <p><strong>ขนาด:</strong> ประมาณ 20-25 cm (จากหัวถึงปลายเท้า)</p>
+        <p><strong>น้ำหนัก:</strong> ประมาณ 0.15 kg</p>
+        <p><strong>วัสดุ:</strong> ผ้าขนสังเคราะห์เนื้อนุ่มพิเศษ มอบสัมผัสที่อ่อนโยน </p>
+        <p><strong>คุณสมบัติพิเศษ:</strong> สามารถซักมือได้, เหมาะสำหรับทุกเพศทุกวัย (แนะนำตั้งแต่แรกเกิด)</p>
+        <p><strong>ราคา:</strong> ฿ <span id="productPrice">760</span></p>
+        
+        <div class="quantity-control">
+            <button onclick="updateQuantity(-1)">-</button>
+            <input type="number" id="quantity" value="1" min="1" readonly>
+            <button onclick="updateQuantity(1)">+</button>
+        </div>
+
+        <button class="add-to-cart-btn" onclick="addToCart()">เพิ่มลงตะกร้า</button>
+
+        <a href="index.html" class="back-button">กลับสู่หน้าหลัก</a>
+    </div>
+
+    <div class="zoom-overlay" id="zoomOverlay" onclick="closeZoom()">
+        <span class="close-zoom">&times;</span>
+        <img src="" alt="Zoomed Product Image" id="zoomedImage">
+    </div>
+
+    <script>
+        // แก้ไข: อาร์เรย์รูปภาพสำหรับ Loulou Love Bug โดยเฉพาะ
+        const images = ["PomPurin.png", "PomPurin1.png", "PomPurin2.png"]; 
+        let currentIndex = 0;
+        const basePrice = 760; // ราคาพื้นฐานสำหรับ Loulou Love Bug
+
+        // ฟังก์ชันสำหรับ Image Slider
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            document.getElementById("productImage").src = images[currentIndex];
+            document.getElementById("zoomedImage").src = images[currentIndex]; // อัปเดตรูปภาพที่ซูมด้วย
+        }
+
+        // ฟังก์ชันสำหรับ Quantity Control (ตัวนับจำนวนสินค้า)
+        function updateQuantity(change) {
+            const quantityInput = document.getElementById("quantity");
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity += change;
+
+            if (currentQuantity < 1) {
+                currentQuantity = 1; // ป้องกันจำนวนติดลบ
+            }
+            quantityInput.value = currentQuantity;
+            // หากต้องการอัปเดตราคาทันทีเมื่อเปลี่ยนจำนวนสินค้า สามารถเปิดใช้งานโค้ดด้านล่าง
+            // document.getElementById("productPrice").textContent = (basePrice * currentQuantity).toLocaleString();
+        }
+
+        // ฟังก์ชันสำหรับ Add to Cart Button (พร้อมข้อความเพิ่มของ)
+        function addToCart() {
+            const quantity = document.getElementById("quantity").value;
+            alert(`เพิ่ม Fuwasha Kids Pom Pom Purin จำนวน ${quantity} ชิ้น ลงในตะกร้าแล้ว!`);
+            // ในเว็บไซต์จริง คุณจะต้องส่งข้อมูลนี้ไปยัง Backend หรือ Local Storage
+        }
+
+        // ฟังก์ชันสำหรับ Image Zoom
+        function openZoom() {
+            const currentImageSrc = document.getElementById("productImage").src;
+            document.getElementById("zoomedImage").src = currentImageSrc;
+            document.getElementById("zoomOverlay").classList.add("active");
+        }
+
+        function closeZoom() {
+            document.getElementById("zoomOverlay").classList.remove("active");
+        }
+
+        // โหลดรูปภาพเริ่มต้นสำหรับ zoom overlay (เพื่อให้แน่ใจว่ารูปภาพที่ถูกต้องถูกตั้งค่าตั้งแต่แรก)
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("zoomedImage").src = images[currentIndex];
+        });
+
+    </script>
+</body>
+</html>
